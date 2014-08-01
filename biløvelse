@@ -1,0 +1,93 @@
+import pygame
+pygame.init
+
+import math
+from math import pi
+
+white = [255, 255, 255]
+black = [ 0, 0, 0]
+green = [0, 255, 0]
+red = [255, 0, 0]
+blue= [0, 0, 255]
+
+size = [500, 500]
+screen = pygame.display.set_mode(size)
+
+pygame.mouse.set_visible(0)
+
+# Loop until the user clicks close button
+done = False
+
+# Set time for when it updates
+clock = pygame.time.Clock()
+
+# Keyboard
+x_coord = 10
+y_coord = 10
+
+x_speed = 0
+y_speed = 0
+
+
+
+# Codes to stuff on the screen
+def draw_car(screen, x_coord, y_coord): #pygame.draw.circle(screen, color, (x, y), radius, optional width)
+
+    # Draw front wheel and arch # pygame.draw.arc(screen, color, (x,y,width,height), start_angle, stop_angle, thickness)
+    pygame.draw.circle(screen, black, [186+x_coord, 350-209+y_coord], 30)
+    pygame.draw.arc(screen, black, [364-214+x_coord, 309-209+y_coord, 72, 70], 0.3, 2.8, 7)
+
+    # Draw back wheels and arch
+    pygame.draw.circle(screen, black, [250-214+x_coord, 141+y_coord], 30)
+    pygame.draw.arc(screen, black, [+x_coord, 100+y_coord, 72, 70], 0.3, 2.8, 7)
+
+    # Draw body of the car
+    pygame.draw.rect(screen, black, [71+x_coord, 101+y_coord, 80, 60])
+    pygame.draw.rect(screen, black, [71+x_coord, 71+y_coord, 50, 30])
+    pygame.draw.arc(screen, black, [65+x_coord, +y_coord, 87, 70], 0.3, 2.8, 7)
+    pygame.draw.line(screen, black, [72+x_coord, 227-209+y_coord], [243-214+x_coord, 309-209+y_coord], 7)
+    pygame.draw.line(screen, black, [145+x_coord, 20+y_coord], [189+x_coord, 105+y_coord], 7)
+
+
+while not done:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+            
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                x_speed = -3
+            if event.key == pygame.K_RIGHT:
+                x_speed = 3
+            if event.key == pygame.K_UP:
+                y_speed = -3
+            if event.key == pygame.K_DOWN:
+                y_speed = 3
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                x_speed = 0
+            if event.key == pygame.K_RIGHT:
+                x_speed = 0
+            if event.key == pygame.K_UP:
+                y_speed = 0
+            if event.key == pygame.K_DOWN:
+                y_speed = 0
+
+    # Game logic herafter
+    x_coord += x_speed
+    y_coord += y_speed
+    
+
+    screen.fill(white)
+
+    draw_car(screen, x_coord, y_coord)
+
+   
+    # Update screen
+    pygame.display.flip()
+
+    # Max loop
+    clock.tick(60)
+
+pygame.quit()
